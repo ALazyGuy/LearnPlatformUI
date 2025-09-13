@@ -1,0 +1,41 @@
+import { Component, Injector, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { ComponentConfiguration, StaticBlockComponentConfiguration } from '../../models/component-configuration';
+import { CmsService } from '../../services/cms-service';
+import { TextComponent } from '../text-component/text-component';
+
+@Component({
+  selector: 'lp-static-block-component',
+  standalone: false,
+  templateUrl: './static-block-component.html',
+  styleUrl: './static-block-component.scss'
+})
+export class StaticBlockComponent implements OnInit {
+
+  blocks$: Observable<StaticBlockComponentConfiguration> = of()
+
+  constructor(private cmsService: CmsService, private injector: Injector) { }
+
+  ngOnInit(): void {
+    this.blocks$ = this.cmsService.getContent();
+  }
+
+  getComponent(component: ComponentConfiguration) {
+    switch (component.type) {
+      case 'TextComponent':
+        return TextComponent;
+      default:
+        return null;
+    }
+  }
+
+  createInjector(config: ComponentConfiguration): Injector {
+    return Injector.create({
+      providers: [
+        { provide: 'componentConfig', useValue: config }
+      ],
+      parent: this.injector
+    });
+  }
+
+}

@@ -1,0 +1,5 @@
+<div class="block" *ngIf="blocks$ | async as blocks">
+    @for(component of blocks.components; track component) {
+        <ng-container *ngComponentOutlet="getComponent(component); injector: createInjector(component)"></ng-container>
+    }
+</div>
