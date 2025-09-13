@@ -1,0 +1,10 @@
+<div class="container">
+    @if (selectedBlock$ | async; as selectedBlock) {
+        <span class="header">You are editing block: {{ selectedBlock.uniqueId }}</span>
+        @for(button of buttons; track button) {
+            <button (click)="_addComponent(button.type)">{{ button.viewText }}</button>
+        }
+    } @else {
+        <span class="header">No block selected</span>
+    }
+</div>

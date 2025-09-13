@@ -1,5 +1,6 @@
 export interface ComponentConfiguration {
     type: string;
+    uniqueId: string;
 }
 
 export interface TextComponentConfiguration extends ComponentConfiguration {

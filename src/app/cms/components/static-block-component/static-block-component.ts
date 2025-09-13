@@ -1,5 +1,5 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { Observable, of, take, tap } from 'rxjs';
 import { ComponentConfiguration, StaticBlockComponentConfiguration } from '../../models/component-configuration';
 import { CmsService } from '../../services/cms-service';
 import { TextComponent } from '../text-component/text-component';
@@ -10,17 +10,14 @@ import { TextComponent } from '../text-component/text-component';
   templateUrl: './static-block-component.html',
   styleUrl: './static-block-component.scss'
 })
-export class StaticBlockComponent implements OnInit {
+export class StaticBlockComponent{
 
-  blocks$: Observable<StaticBlockComponentConfiguration> = of()
+  @Output() selectBlock: EventEmitter<StaticBlockComponentConfiguration> = new EventEmitter<StaticBlockComponentConfiguration>();
+  @Input() block: StaticBlockComponentConfiguration | undefined;
 
   constructor(private cmsService: CmsService, private injector: Injector) { }
 
-  ngOnInit(): void {
-    this.blocks$ = this.cmsService.getContent();
-  }
-
-  getComponent(component: ComponentConfiguration) {
+  getComponent(component: ComponentConfiguration){
     switch (component.type) {
       case 'TextComponent':
         return TextComponent;
@@ -36,6 +33,10 @@ export class StaticBlockComponent implements OnInit {
       ],
       parent: this.injector
     });
+  }
+
+  selectSelf(): void {
+    this.selectBlock.emit(this.block);
   }
 
 }
