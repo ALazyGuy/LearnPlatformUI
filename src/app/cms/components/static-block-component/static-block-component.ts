@@ -12,7 +12,6 @@ import { TextComponent } from '../text-component/text-component';
 })
 export class StaticBlockComponent{
 
-  @Output() selectBlock: EventEmitter<StaticBlockComponentConfiguration> = new EventEmitter<StaticBlockComponentConfiguration>();
   @Input() block: StaticBlockComponentConfiguration | undefined;
 
   constructor(private cmsService: CmsService, private injector: Injector) { }
@@ -36,7 +35,11 @@ export class StaticBlockComponent{
   }
 
   selectSelf(): void {
-    this.selectBlock.emit(this.block);
+    this.cmsService.selectBlock(this.block?.uniqueId || null);
+  }
+
+  selectComponent(component: ComponentConfiguration | undefined): void {
+    this.cmsService.selectComponent(component);
   }
 
 }

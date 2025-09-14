@@ -1,6 +1,9 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { ComponentActions } from '../../../store/cms/cms.actions';
+import { BlockConfiguration, ComponentConfiguration, TextComponentConfiguration } from '../../models/component-configuration';
 import { BehaviorSubject } from 'rxjs';
-import { StaticBlockComponentConfiguration } from '../../models/component-configuration';
+import { CmsService } from '../../services/cms-service';
 
 @Component({
   selector: 'lp-side-bar-component',
@@ -10,15 +13,20 @@ import { StaticBlockComponentConfiguration } from '../../models/component-config
 })
 export class SideBarComponent {
 
-  @Input() selectedBlock$: BehaviorSubject<StaticBlockComponentConfiguration|null> = new BehaviorSubject<StaticBlockComponentConfiguration|null>(null);
-  @Output() addComponent: EventEmitter<{type: string, blockId: string}> = new EventEmitter<{type: string, blockId: string}>();
+  selectedBlock$: BehaviorSubject<BlockConfiguration | null> = new BehaviorSubject<BlockConfiguration | null>(null);
+  selectedComponent$: BehaviorSubject<ComponentConfiguration | null> = new BehaviorSubject<ComponentConfiguration | null>(null);
 
   readonly buttons: {viewText: string, type: string}[] = [
     {viewText: 'Simple Text', type: 'TextComponent'},
   ];
 
-  _addComponent(type: string) {
-    this.addComponent.emit({type: type, blockId: this.selectedBlock$.value?.uniqueId || ''});
+  constructor(private store: Store, private cmsService: CmsService) {
+    this.selectedBlock$ = this.cmsService.getSelectedBlock();
+    this.selectedComponent$ = this.cmsService.getSelectedComponent();
+  }
+
+  addComponent(type: string) {
+    this.store.dispatch(ComponentActions.addComponent({component: {type: type, uniqueId: `text-${Math.random()}`, data: 'New text'} as TextComponentConfiguration}));
   }
 
 }
