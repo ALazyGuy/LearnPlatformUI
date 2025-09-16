@@ -1,7 +1,9 @@
 <div class="page-container builder-page">
-    <div class="content" *ngIf="blocks$ | async as blocks">
-        @for(block of blocks; track block) {
-        <lp-static-block-component [block]="block"></lp-static-block-component>
+    <div class="content">
+        @if(blocks$ | async; as blocks) {
+            @for(block of blocks; track block.uniqueId) {
+                <lp-static-block-component [block]="block"></lp-static-block-component>
+            }
         }
     </div>
     <lp-side-bar-component></lp-side-bar-component>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TextComponent } from './components/text-component/text-component';
 import { StaticBlockComponent } from './components/static-block-component/static-block-component';
 import { SideBarComponent } from './components/side-bar-component/side-bar-component';
+import { ImageComponent } from './components/image-component/image-component';
 
 
 
@@ -10,7 +11,8 @@ import { SideBarComponent } from './components/side-bar-component/side-bar-compo
   declarations: [
     TextComponent,
     StaticBlockComponent,
-    SideBarComponent
+    SideBarComponent,
+    ImageComponent
   ],
   imports: [
     CommonModule

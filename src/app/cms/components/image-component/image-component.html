@@ -1,0 +1,7 @@
+<div>
+    @if (config && config.src) {
+        <img [src]="config.src" [alt]="config.altText" [width]="config.width" [height]="config.height"/>
+    } @else {
+        <p>No image available</p>
+    }
+</div>

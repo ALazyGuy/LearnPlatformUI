@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
 import { Observable, of, take, tap } from 'rxjs';
 import { ComponentConfiguration, StaticBlockComponentConfiguration } from '../../models/component-configuration';
 import { CmsService } from '../../services/cms-service';
 import { TextComponent } from '../text-component/text-component';
+import { ImageComponent } from '../image-component/image-component';
 
 @Component({
   selector: 'lp-static-block-component',
   standalone: false,
   templateUrl: './static-block-component.html',
-  styleUrl: './static-block-component.scss'
+  styleUrl: './static-block-component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StaticBlockComponent{
 
@@ -20,12 +22,15 @@ export class StaticBlockComponent{
     switch (component.type) {
       case 'TextComponent':
         return TextComponent;
+      case 'ImageComponent':
+        return ImageComponent;
       default:
         return null;
     }
   }
 
   createInjector(config: ComponentConfiguration): Injector {
+    console.log("called");
     return Injector.create({
       providers: [
         { provide: 'componentConfig', useValue: config }
