@@ -1,7 +1,7 @@
 <div class="block" (click)="selectSelf()">
     @if(block) {
         @for(component of block.components; track component.uniqueId) {
-            <div (click)="selectComponent(component); $event.stopPropagation()" class="selector">
+            <div (click)="selectComponent(component); $event.stopPropagation()" [class]="'selector' + (builderMode ? ' builder-mode' : '')">
                 <ng-container *ngComponentOutlet="getComponent(component); injector: createInjector(component)"></ng-container>
             </div>
         }

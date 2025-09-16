@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import { initialCmsState } from "./cms.state";
-import { BlockActions, ComponentActions } from "./cms.actions";
+import { BlockActions, CmsActions, ComponentActions } from "./cms.actions";
 import { BlockConfiguration } from "../../cms/models/component-configuration";
 
 export const cmsReducer = createReducer(
@@ -59,5 +59,8 @@ export const cmsReducer = createReducer(
     }),
     on(ComponentActions.selectComponent, (state, {component}) => {
         return {...state, selectedComponent: component, selectedBlock: null};
+    }),
+    on(CmsActions.updateBuilderMode, (state, {mode}) => {
+        return {...state, buildModeEnabled: mode};
     })
 );

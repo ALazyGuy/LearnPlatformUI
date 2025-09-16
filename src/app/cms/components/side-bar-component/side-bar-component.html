@@ -1,4 +1,5 @@
 <div class="container">
+    <button (click)="updateBuilderMode()">{{ builderMode ? 'Disable' : 'Enable'}} builder mode</button>
     @if(selectedComponent$ | async; as selectedComponent) {
         <span class="header">You are editing component: {{ selectedComponent.uniqueId }}</span>
     } @else {

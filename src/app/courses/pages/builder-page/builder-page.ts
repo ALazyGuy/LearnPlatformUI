@@ -12,8 +12,11 @@ import { CmsService } from '../../../cms/services/cms-service';
 export class BuilderPage implements OnInit{
 
   blocks$: BehaviorSubject<StaticBlockComponentConfiguration[]> = new BehaviorSubject<StaticBlockComponentConfiguration[]>([]);
+  builderMode: boolean = false;
 
-  constructor(private cmsService: CmsService) { }
+  constructor(private cmsService: CmsService) { 
+    this.cmsService.getBuildMode().subscribe(mode => this.builderMode = mode);
+  }
 
   ngOnInit(): void {
     this.blocks$ = this.cmsService.getBlocks();

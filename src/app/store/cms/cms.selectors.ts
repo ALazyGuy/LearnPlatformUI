@@ -17,3 +17,8 @@ export const selectSelectedComponent = createSelector(
   selectCms,
   (state: CmsState) => state.selectedComponent
 );
+
+export const selectBuildMode = createSelector(
+  selectCms,
+  (state: CmsState) => state.buildModeEnabled
+);

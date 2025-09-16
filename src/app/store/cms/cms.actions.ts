@@ -17,3 +17,10 @@ export const ComponentActions = createActionGroup({
     "Select component": props<{component: ComponentConfiguration}>()
   }
 });
+
+export const CmsActions = createActionGroup({
+  source: "CMS",
+  events: {
+    "Update builder mode": props<{mode: boolean}>()
+  }
+})

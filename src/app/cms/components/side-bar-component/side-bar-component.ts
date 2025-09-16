@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { ComponentActions } from '../../../store/cms/cms.actions';
+import { CmsActions, ComponentActions } from '../../../store/cms/cms.actions';
 import { BlockConfiguration, ComponentConfiguration, ImageComponentConfiguration, TextComponentConfiguration } from '../../models/component-configuration';
 import { BehaviorSubject } from 'rxjs';
 import { CmsService } from '../../services/cms-service';
@@ -17,6 +17,7 @@ export class SideBarComponent {
 
   selectedBlock$: BehaviorSubject<BlockConfiguration | null> = new BehaviorSubject<BlockConfiguration | null>(null);
   selectedComponent$: BehaviorSubject<ComponentConfiguration | null> = new BehaviorSubject<ComponentConfiguration | null>(null);
+  builderMode: boolean = false;
 
   readonly buttons: {viewText: string, type: string}[] = [
     {viewText: 'Simple Text', type: 'TextComponent'},
@@ -26,6 +27,7 @@ export class SideBarComponent {
   constructor(private store: Store, private cmsService: CmsService) {
     this.selectedBlock$ = this.cmsService.getSelectedBlock();
     this.selectedComponent$ = this.cmsService.getSelectedComponent();
+    this.builderMode = this.cmsService.getBuildMode().getValue();
   }
 
   addComponent(type: string) {
@@ -49,6 +51,11 @@ export class SideBarComponent {
 
   private _addComponent(component: ComponentConfiguration) {
     this.store.dispatch(ComponentActions.addComponent({component: component}));
+  }
+
+  updateBuilderMode() {
+    this.builderMode = !this.builderMode;
+    this.store.dispatch(CmsActions.updateBuilderMode({mode: this.builderMode}));
   }
 
 }

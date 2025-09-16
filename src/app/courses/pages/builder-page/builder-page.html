@@ -2,7 +2,7 @@
     <div class="content">
         @if(blocks$ | async; as blocks) {
             @for(block of blocks; track block.uniqueId) {
-                <lp-static-block-component [block]="block"></lp-static-block-component>
+                <lp-static-block-component [block]="block" [builderMode]="builderMode"></lp-static-block-component>
             }
         }
     </div>

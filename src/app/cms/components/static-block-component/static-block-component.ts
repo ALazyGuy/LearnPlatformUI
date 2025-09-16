@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Injector, Input, OnInit, Output } from '@angular/core';
-import { Observable, of, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, take, tap } from 'rxjs';
 import { ComponentConfiguration, StaticBlockComponentConfiguration } from '../../models/component-configuration';
 import { CmsService } from '../../services/cms-service';
 import { TextComponent } from '../text-component/text-component';
@@ -15,6 +15,7 @@ import { ImageComponent } from '../image-component/image-component';
 export class StaticBlockComponent{
 
   @Input() block: StaticBlockComponentConfiguration | undefined;
+  @Input() builderMode: boolean = false;
 
   constructor(private cmsService: CmsService, private injector: Injector) { }
 
